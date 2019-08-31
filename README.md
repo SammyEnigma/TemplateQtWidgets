@@ -12,7 +12,7 @@ Features:
 - For Windows: implemented to obtain colorization colorization ColorizationColor from the QtWinExtras module
 - For Windows: scripts and other files have been created to create the Inno Setup installer
 - The C ++ class "Utils" is connected with its own static functions, which I often use in my projects
-
+#
 Шаблон проекта на QtWidgets для быстрого создания приложения с некоторым реализованным часто встречающимся функционалом.</br>
 Особенности:
 - Главное окно с некоторыми элемениами
