@@ -5,9 +5,9 @@ Features:
 - The main window with some elements
 - Internationalization - prepared ts-file and loading qm-file at startup
 - Dynamic change of the language (locale) of the interface directly while the program is running
-- Displaying information about the assembly of the application (Qt version, CPU architecture, etc.)
+- Displaying information about the build of the application (Qt version, CPU architecture, etc.)
 - A qrc resource file is connected
-- For Windows: building exe and necessary dependencies in the path: {project directory} \ deploy {platform} in release mode
+- For Windows: building exe and necessary dependencies in the path: "{project directory}\deploy\\{platform}" in release mode
 - For Windows: implemented executive file icon (Icon made by Freepik from www.flaticon.com)
 - For Windows: implemented to obtain colorization colorization ColorizationColor from the QtWinExtras module
 - For Windows: scripts and other files have been created to create the Inno Setup installer
@@ -20,7 +20,7 @@ Features:
 - Динамическое изменение языка (локали) интефейса прямо во время работы программы
 - Вывод информации о сборке приложения (Версия Qt, архитектура CPU и др.)
 - Подключён qrc-файл ресурсов
-- Для Windows: сборка exe и необходимых зависимостей в путь: {директория проекта}\deploy{платформа} в режиме выпуска
+- Для Windows: сборка exe и необходимых зависимостей в путь: "{директория проекта}\deploy\\{платформа}" в режиме выпуска
 - Для Windows: реализована иконка исполнительного файла (Icon made by Freepik from www.flaticon.com)
 - Для Windows: реализовано получение цвета раскрашевания ColorizationColor из модуля QtWinExtras
 - Для Windows: созданы скрипты и другие файлы для создания инсталлятора Inno Setup
