@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "I18nManager.h"
 
 namespace Ui {
 class MainWindow;
@@ -20,8 +21,13 @@ private slots:
     void on_actionAboutSoftware_triggered();
     void on_actionExit_triggered();
 
+protected:
+    void changeEvent(QEvent *event);
+
 private:
     Ui::MainWindow *ui;
+    I18nManager _i18n;
+
 };
 
 #endif // MAINWINDOW_H

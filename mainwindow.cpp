@@ -7,6 +7,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    //Fill the menu by language actions
+    ui->menuLanguage->addActions(_i18n.buildActions(ui->menuLanguage));
 }
 
 MainWindow::~MainWindow()
@@ -34,4 +37,13 @@ void MainWindow::on_actionAboutSoftware_triggered()
 void MainWindow::on_actionExit_triggered()
 {
     close();
+}
+
+void MainWindow::changeEvent(QEvent *event){
+    QMainWindow::changeEvent(event);
+    if (event->type() == QEvent::LanguageChange) {
+        ui->retranslateUi(this);
+        ui->menuLanguage->setIcon(_i18n.currentIcon());
+        qDebug("Language changed");
+    }
 }

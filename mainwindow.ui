@@ -40,11 +40,9 @@
      <string>Language</string>
     </property>
     <property name="icon">
-     <iconset resource="res.qrc">
+     <iconset>
       <normaloff>:/res/flag_en.png</normaloff>:/res/flag_en.png</iconset>
     </property>
-    <addaction name="actionRussian"/>
-    <addaction name="actionEnglish"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuHelp"/>
@@ -83,7 +81,7 @@
   <action name="actionEnglish">
    <property name="icon">
     <iconset resource="res.qrc">
-     <normaloff>:/res/flag_en.png</normaloff>:/res/flag_en.png</iconset>
+     <normaloff>:/res/flag_en_US.png</normaloff>:/res/flag_en_US.png</iconset>
    </property>
    <property name="text">
     <string notr="true">English</string>

@@ -22,7 +22,9 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 TRANSLATIONS += app_ru.ts
 RC_FILE = rc.rc
+
 include(Utils/utils.pri)
+include(I18nManager/I18nManager.pri)
 
 # You can also make your code fail to compile if you use deprecated APIs.
 # In order to do so, uncomment the following line.
