@@ -1,6 +1,9 @@
 build
 build*
-deploy
-windows_installers
+
+deploy/unix/x86_32/appdir/*
+deploy/unix/x86_64/appdir/*
+deploy/windows/x86_32/appdir/*
+deploy/windows/x86_64/appdir/*
 
 *.pro.user
