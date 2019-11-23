@@ -34,13 +34,16 @@ include(I18nManager/I18nManager.pri)
 CONFIG += c++11
 
 HEADERS += \
+        devwindow.h \
         mainwindow.h
 
 SOURCES += \
+        devwindow.cpp \
         main.cpp \
         mainwindow.cpp
 
 FORMS += \
+        devwindow.ui \
         mainwindow.ui
 
 RESOURCES += res.qrc
@@ -58,10 +61,10 @@ CONFIG(debug, debug|release) {
         #Указываем папку, в которую будет помещён исполнительный файл с библиотеками, в зависимости от архитектуры
         contains(QT_ARCH, i386) {
             #Для Windows x32
-            DESTDIR = $$_PRO_FILE_PWD_/deploy/windows_x86_32
+            DESTDIR = $$_PRO_FILE_PWD_/../deploy/windows/x86_32/appdir
         } else {
             #Для Windows x64
-            DESTDIR = $$_PRO_FILE_PWD_/deploy/windows_x86_64
+            DESTDIR = $$_PRO_FILE_PWD_/../deploy/windows/x86_64/appdir
         }
 
         #Запуск утилиты "windeployqt", которая собирает нужные dll в папку с исполнительным файлом
@@ -70,12 +73,19 @@ CONFIG(debug, debug|release) {
         #Поэтому эти файлы нужно скопировать вручную. Внимание: файл "qtlabsplatformplugind.dll" (с "d" на конце имени без расширения) не копировать в релизную версию,
         #так как он будет бесполезен и занимать много места
         QMAKE_POST_LINK = $$(QTDIR)/bin/windeployqt --release --qmldir $$(QTDIR)/qml $$DESTDIR
-        message("Building will be in \""$$DESTDIR"\"")
+        message("Release building for Windows will be in \""$$DESTDIR"\"")
     }
 
     unix {
-        message("Building for unix")
-        DESTDIR = $$_PRO_FILE_PWD_/deploy/unix#Папка, куда кладётся конечный билд
+        contains(QT_ARCH, i386) {
+            #Для Windows x32
+            DESTDIR = $$_PRO_FILE_PWD_/../deploy/unix/x86_32/appdir/usr/bin
+        } else {
+            #Для Windows x64
+            DESTDIR = $$_PRO_FILE_PWD_/../deploy/unix/x86_64/appdir/usr/bin
+        }
+
+        message("Release building for Linux will be in \""$$DESTDIR"\"")
         #ToDo: реализовать вызов linuxdeployqt
     }
     macx {

@@ -2,7 +2,7 @@
 #include <QLibraryInfo>
 #include <QApplication>
 #include <QSettings>
-
+#include <QDebug>
 
 
 I18nManager::I18nManager()
@@ -14,14 +14,14 @@ I18nManager::I18nManager()
     localeInfo = LocaleInfo();
     localeInfo.locale = QLocale::Russian;
     localeInfo.name   = firstUpperCase(localeInfo.locale.nativeLanguageName());
-    localeInfo.icon   = findIcon(localeInfo.locale);
+    localeInfo.icon   = findFlag(localeInfo.locale, IconSize::_16x16);
     _availableLocales.append(localeInfo);
 
     //C / en_US
     localeInfo = LocaleInfo();
     localeInfo.locale = QLocale::C;
     localeInfo.name   = "English";
-    localeInfo.icon   = findIcon(localeInfo.locale);
+    localeInfo.icon   = findFlag(localeInfo.locale, IconSize::_16x16);
     _availableLocales.append(localeInfo);
 
     //Load last last selected locale if possible
@@ -50,14 +50,27 @@ void I18nManager::changeLocalBySenderData()
 void I18nManager::changeLocale(const QLocale &locale)
 {
     QLocale().setDefault(locale);
-    qDebug(QString("Locale selected \"%1\"").arg(locale.name()).toUtf8());
+    qDebug() << "Locale selected" << locale.name();
 
     //Remove previous translations
     deleteTranslators();
 
     if (!isAvailableLocale(locale))
     {
-        qDebug("This locale is unavailable (not installed)");
+        qWarning() << "Locale" << locale.name() << "is unavailable (not installed)";
+
+        QString availableLocations;
+        for (int i = 0; i < _availableLocales.count(); ++i)
+        {
+            const LocaleInfo& localeInfo = _availableLocales.at(i);
+            availableLocations += "\"" + localeInfo.locale.name() + "\"";
+            if (i < _availableLocales.count() - 1)
+            {
+                availableLocations += ", ";
+            }
+        }
+        qWarning("Available locales: " + availableLocations.toUtf8());
+
         return;
     }
 
@@ -71,7 +84,7 @@ void I18nManager::changeLocale(const QLocale &locale)
         }
         else
         {
-            qDebug("Failed to load application translation");
+            qWarning("Failed to load application translation");
             delete _translatorApp;
             _translatorApp = nullptr;
         }
@@ -85,18 +98,18 @@ void I18nManager::changeLocale(const QLocale &locale)
     }
     else
     {
-        qDebug("Failed to load library translation");
+        qWarning("Failed to load Qt translation");
         delete _translatorQt;
         _translatorQt = nullptr;
     }
 
     //Searching icon file
     bool foundIcon = false;
-    _currentIcon = findIcon(locale, &foundIcon);
+    _currentIcon = findFlag(locale, IconSize::_16x16, &foundIcon);
 
     if (!foundIcon)
     {
-        qDebug("Failed to load locale icon");
+        qWarning("Failed to load locale icon");
     }
 
     //Saving
@@ -114,24 +127,49 @@ QString I18nManager::firstUpperCase(QString line){
     return line;
 }
 
-QIcon I18nManager::findIcon(const QLocale &locale, bool* found)
+QIcon I18nManager::findFlag(const QLocale &locale, const IconSize& size, bool* found)
 {
-    QStringList iconPostfixes;
+    QIcon icon;
+
+    //Searching dirs
+    QStringList searchPaths;
 
     if (locale == QLocale::C)
     {
-        iconPostfixes = QStringList({"en", "en_US"});
+        searchPaths = QStringList({"en_US", "en"});
     }
     else
     {
-        iconPostfixes = QStringList({locale.name(), locale.name().left(2)});
+        searchPaths = QStringList({locale.name()});
+
+        if (locale.name().length() > 2)
+        {
+            searchPaths.append(locale.name().left(2));
+        }
     }
 
-    bool foundIcon = false;
-    QIcon icon;
-    for (const QString& postfixName : iconPostfixes)
+    //Icon size dir
+    QString sizeDirName = "16x16";
+    switch (size) {
+    case _16x16:
+        sizeDirName = "16x16";
+        break;
+    }
+
+    //Merge dirNames to Path
+    if (!sizeDirName.isEmpty())
     {
-        icon = QIcon(_iconsDir + "/" + _iconPrefixName +  postfixName);
+        for (int i = 0; i < searchPaths.count(); ++i)
+        {
+            searchPaths[i] = ":/data/" + searchPaths[i] + "/icons/" + sizeDirName + "/icon.png";
+        }
+    }
+
+    //Attempts to open file
+    bool foundIcon = false;
+    for (const QString& fileName : searchPaths)
+    {
+        icon = QIcon(fileName);
         if (!icon.availableSizes().isEmpty())
         {
             foundIcon = true;
@@ -144,6 +182,7 @@ QIcon I18nManager::findIcon(const QLocale &locale, bool* found)
         *found = foundIcon;
     }
 
+
     return icon;
 }
 
@@ -152,7 +191,7 @@ QIcon I18nManager::currentIcon()
     return _currentIcon;
 }
 
-QList<LocaleInfo> I18nManager::availableLocales()
+QList<I18nManager::LocaleInfo> I18nManager::availableLocales()
 {
     return _availableLocales;
 }
@@ -161,7 +200,7 @@ bool I18nManager::isAvailableLocale(const QLocale &locale)
 {
     for (const LocaleInfo& localeInfo : _availableLocales)
     {
-        if (localeInfo.locale == locale)
+        if (localeInfo.locale.name() == locale.name())
         {
             return true;
         }

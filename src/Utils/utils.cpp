@@ -49,6 +49,10 @@ QString Utils::getFileNameFromPath(QString filePath){
     if (filePath.contains('/')){
         filePath = filePath.mid(filePath.lastIndexOf('/') + 1);
     }
+    if (filePath.contains('\\')){
+        filePath = filePath.mid(filePath.lastIndexOf('\\') + 1);
+    }
+
     return filePath;
 }
 

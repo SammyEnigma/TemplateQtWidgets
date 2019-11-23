@@ -19,7 +19,7 @@
      <x>0</x>
      <y>0</y>
      <width>400</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -40,8 +40,8 @@
      <string>Language</string>
     </property>
     <property name="icon">
-     <iconset>
-      <normaloff>:/res/flag_en.png</normaloff>:/res/flag_en.png</iconset>
+     <iconset resource="I18nManager/I18nManager.qrc">
+      <normaloff>:/flags/16x16/ru.png</normaloff>:/flags/16x16/ru.png</iconset>
     </property>
    </widget>
    <addaction name="menuFile"/>
@@ -65,7 +65,7 @@
   </action>
   <action name="actionRussian">
    <property name="icon">
-    <iconset resource="res.qrc">
+    <iconset>
      <normaloff>:/res/flag_ru.png</normaloff>:/res/flag_ru.png</iconset>
    </property>
    <property name="text">
@@ -80,7 +80,7 @@
   </action>
   <action name="actionEnglish">
    <property name="icon">
-    <iconset resource="res.qrc">
+    <iconset>
      <normaloff>:/res/flag_en_US.png</normaloff>:/res/flag_en_US.png</iconset>
    </property>
    <property name="text">
@@ -96,7 +96,7 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="res.qrc"/>
+  <include location="I18nManager/I18nManager.qrc"/>
  </resources>
  <connections/>
 </ui>

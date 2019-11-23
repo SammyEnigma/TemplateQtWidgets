@@ -1,4 +1,5 @@
 build
+build*
 deploy
 windows_installers
 

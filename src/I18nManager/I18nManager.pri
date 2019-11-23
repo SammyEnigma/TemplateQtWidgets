@@ -9,3 +9,6 @@ HEADERS += \
 
 SOURCES += \
     $$PWD/I18nManager.cpp
+
+RESOURCES += \
+    $$PWD/I18nManagerData.qrc

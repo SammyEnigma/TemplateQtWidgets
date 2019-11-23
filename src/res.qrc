@@ -2,7 +2,5 @@
     <qresource prefix="/">
         <file>app_ru.qm</file>
         <file>res/menu.svg</file>
-        <file>res/flag_ru.png</file>
-        <file>res/flag_en_US.png</file>
     </qresource>
 </RCC>
